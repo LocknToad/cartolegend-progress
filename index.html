@@ -1,13 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="A picture-first CartoLegend progress report: real examples for RC1 through RC8 and measured charts.">
+  <meta name="description" content="CartoLegend RC1 through RC8: real map inputs, saved outputs, measured results and public downloads.">
   <link rel="icon" href="data:,">
   <title>CartoLegend — RC1 to RC8 in pictures</title>
-</head>
-<body>
 <style>
   :root{
     --paper:#f3efe6;
@@ -28,7 +26,7 @@
     --max:1180px;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-padding-top:64px}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
   img{max-width:100%}
   a{color:inherit}
@@ -46,6 +44,9 @@
   .hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:13px 15px}
   .hero-stat b{display:block;font-family:Georgia,serif;font-size:1.6rem;color:#fff;line-height:1}
   .hero-stat span{display:block;color:#bad1cf;font-size:.76rem;margin-top:5px}
+  .hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .hero-link{display:inline-flex;align-items:center;text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;color:#fff;background:rgba(255,255,255,.08);font-size:.74rem;font-weight:850}
+  .hero-link:hover{background:rgba(255,255,255,.15)}
   .hero-showcase{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;transform:rotate(1.2deg)}
   .hero-shot{position:relative;margin:0;background:#fff;border:4px solid rgba(255,255,255,.9);border-radius:10px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.3)}
   .hero-shot:nth-child(even){transform:translateY(18px)}
@@ -76,6 +77,9 @@
   .answer b{font:900 .65rem ui-monospace,monospace;letter-spacing:.1em;color:var(--teal);padding-top:2px}
   .answer span{font-size:.9rem;color:var(--muted)}
   .score{grid-column:1/-1;font:800 .8rem ui-monospace,monospace;color:var(--navy);margin-top:1px}
+  .resource-links{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+  .resource-link{display:inline-flex;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-size:.72rem;font-weight:850;color:var(--navy)}
+  .resource-link:hover{border-color:var(--teal);color:var(--teal)}
   .picture-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
   figure{margin:0;background:#ece8df;min-width:0}
   .picture{display:block;text-decoration:none;background:#ece8df;border:0}
@@ -109,13 +113,8 @@
   footer{padding:30px 0 52px;color:var(--muted);font-size:.78rem}
   .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .how{background:#e8eee9}
-  .pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 30px}
-  .stage{position:relative;background:var(--navy);color:#fff;border-radius:13px;padding:16px;min-height:118px}
-  .stage strong{display:block;color:#ff9b78;font:900 1.35rem ui-monospace,monospace;line-height:1}
-  .stage b{display:block;font-family:Georgia,serif;font-size:1.18rem;margin-top:10px}
-  .stage span{display:block;color:#c6d9d6;font-size:.76rem;margin-top:4px}
   .worked{display:grid;gap:22px}
-  .worked-example{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+  .worked-example{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:64px}
   .example-head{display:flex;align-items:end;justify-content:space-between;gap:20px;padding:20px 22px;border-bottom:1px solid var(--line)}
   .example-head h3{font-size:clamp(1.35rem,3vw,2rem);margin:5px 0 0}
   .example-head p{font-size:.83rem;color:var(--muted);max-width:36ch;margin:0}
@@ -126,6 +125,12 @@
   .bbox-demo{position:relative;background:#fff}
   .det-box{position:absolute;left:24.31%;top:64.17%;width:1.38%;height:2.02%;min-width:14px;min-height:14px;border:3px solid #20b66b;box-shadow:0 0 0 2px rgba(255,255,255,.75)}
   .det-box em{position:absolute;left:-3px;top:-25px;background:#087744;color:#fff;padding:3px 6px;border-radius:4px;font:900 .58rem ui-monospace,monospace;font-style:normal;letter-spacing:.05em;text-transform:uppercase}
+  .mark-box{position:absolute;pointer-events:none;border:3px solid;box-shadow:0 0 0 2px rgba(255,255,255,.78)}
+  .mark-box em{position:absolute;left:-3px;top:-25px;color:#fff;padding:3px 6px;border-radius:4px;font:900 .55rem ui-monospace,monospace;font-style:normal;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+  .black-saved{left:1.34%;top:16.94%;width:10.19%;height:10.74%;border-color:#d9524b}.black-saved em{background:#962e2a}
+  .black-target-1{left:5.23%;top:54.55%;width:4.16%;height:11.98%;border-color:#20b66b}.black-target-1 em{background:#087744}
+  .black-target-2{left:5.09%;top:67.36%;width:4.29%;height:11.98%;border-color:#20b66b}
+  .black-target-3{left:5.23%;top:83.06%;width:2.55%;height:8.68%;border-color:#20b66b}
   .output-panel{background:var(--navy);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:center}
   .output-label{font:900 .65rem ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#89d7cd;margin:0 0 12px}
   .record{border:1px solid rgba(255,255,255,.2);border-radius:10px;overflow:hidden}
@@ -136,6 +141,7 @@
   .example-visuals img{display:block;width:100%;height:300px;object-fit:contain;background:#f8f7f2}
   .result-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}
   .result-stat{background:var(--navy);color:#fff;padding:15px 17px}
+  .result-stat.bad{background:#6f2927}
   .result-stat b{display:block;font-family:Georgia,serif;font-size:1.45rem;color:#fff;line-height:1}.result-stat span{display:block;color:#bcd0cd;font-size:.71rem;margin-top:5px}
   .geo-example{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
   .geo-example img{display:block;width:100%;height:320px;object-fit:contain;background:#f8f7f2}
@@ -146,13 +152,15 @@
   .coord-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.coord{background:#fff;color:var(--navy);border-radius:8px;padding:9px 10px;font:900 .75rem ui-monospace,monospace;text-align:center}
   @media(max-width:820px){
     .hero-grid{grid-template-columns:1fr}.hero-showcase{margin-top:4px}.hero-shot img{height:150px}
-    .section-head{display:block}.section-note{margin-top:10px}.pipeline{grid-template-columns:repeat(2,1fr)}.example-head{display:block}.example-head p{margin-top:8px}.example-grid,.example-visuals,.geo-example{grid-template-columns:1fr}.rc-top{grid-template-columns:1fr;gap:12px}.rc-id{font-size:2.2rem}.chart-grid{grid-template-columns:1fr}.chart.wide{grid-column:auto}.chart-split{grid-template-columns:1fr}.picture img{height:250px}
+    .section-head{display:block}.section-note{margin-top:10px}.example-head{display:block}.example-head p{margin-top:8px}.example-grid,.example-visuals,.geo-example{grid-template-columns:1fr}.rc-top{grid-template-columns:1fr;gap:12px}.rc-id{font-size:2.2rem}.chart-grid{grid-template-columns:1fr}.chart.wide{grid-column:auto}.chart-split{grid-template-columns:1fr}.picture img{height:250px}
   }
   @media(max-width:580px){
     .wrap{width:min(100% - 24px,var(--max))}.hero{padding-top:18px}.hero-top{margin-bottom:28px}.updated{display:none}.hero-showcase{gap:6px}.hero-shot img{height:112px}.hero-shot span{font-size:.56rem}.hero-stats{grid-template-columns:1fr 1fr}.hero-stat b{font-size:1.3rem}
-    section{padding:50px 0}.stage{min-height:108px;padding:13px}.result-strip{grid-template-columns:1fr 1fr}.answers,.picture-pair{grid-template-columns:1fr}.picture img{height:230px}.bar-row{grid-template-columns:78px 1fr 52px}.rc-top{padding:20px}.chart{padding:18px}
+    section{padding:50px 0}.result-strip{grid-template-columns:1fr 1fr}.answers,.picture-pair{grid-template-columns:1fr}.picture img{height:230px}.bar-row{grid-template-columns:78px 1fr 52px}.rc-top{padding:20px}.chart{padding:18px}
   }
 </style>
+</head>
+<body>
 
 <header class="hero" id="examples">
   <div class="wrap">
@@ -164,15 +172,16 @@
       <div>
         <p class="eyebrow">Real maps. Real outputs.</p>
         <h1>Scanned maps → usable GIS data</h1>
-        <p class="lede">Eight release candidates, including what worked, what failed, and why the current pipeline exists.</p>
-        <div class="hero-stats" aria-label="Headline results">
+        <p class="lede">A scan goes in. Point records, editable polygons and map coordinates come out.</p>
+        <div class="hero-stats" role="group" aria-label="Headline results">
           <div class="hero-stat"><b>87%</b><span>targets found · 347 targets</span></div>
           <div class="hero-stat"><b>8,734</b><span>GIS polygons · 12 sheets</span></div>
-          <div class="hero-stat"><b>17</b><span>real artifacts below</span></div>
+          <div class="hero-stat"><b>20</b><span>example images</span></div>
           <div class="hero-stat"><b>5</b><span>measured charts</span></div>
         </div>
+        <div class="hero-links"><a class="hero-link" href="https://huggingface.co/LockNToad/cartolegend-rc4-modern">RC4-Modern files + run guide ↗</a><a class="hero-link" href="https://huggingface.co/datasets/LockNToad/cartolegend-rc8-gis">RC8 GIS downloads ↗</a></div>
       </div>
-      <div class="hero-showcase" aria-label="The pipeline in four pictures">
+      <div class="hero-showcase" role="group" aria-label="Four real CartoLegend examples">
         <figure class="hero-shot"><img src="assets/rc1-black-crystal.png" alt="Raw Black Crystal geologic-map legend crop"><span>1 · scan</span></figure>
         <figure class="hero-shot"><img src="assets/rc4-black-canyon-symbol-row.png" alt="Point-symbol proposal row from the Black Canyon map"><span>2 · locate</span></figure>
         <figure class="hero-shot"><img src="assets/rc7-hughes-polygons.jpg" alt="Hughes map body with extracted polygon regions"><span>3 · trace</span></figure>
@@ -183,79 +192,126 @@
 </header>
 
 <nav class="toc" aria-label="Page sections"><div class="wrap">
-  <a href="#does">What it actually does</a>
+  <a href="#does">Six real examples</a>
   <a href="#rcs">RC1–RC8 examples</a>
   <a href="#charts">Measured charts</a>
-  <a href="#method">What the numbers mean</a>
+  <a href="https://huggingface.co/datasets/LockNToad/cartolegend-rc8-gis">Download GIS ↗</a>
 </div></nav>
 
 <main>
   <section id="does" class="how">
     <div class="wrap">
       <div class="section-head">
-        <div><p class="kicker">What “the model” actually does</p><h2>Four jobs, shown on real maps</h2></div>
-        <p class="section-note">It is a pipeline of models and ordinary code—not one AI inventing a new map.</p>
-      </div>
-
-      <div class="pipeline" aria-label="CartoLegend pipeline">
-        <div class="stage"><strong>01</strong><b>Find</b><span>A detector crops candidate symbols and legend rows.</span></div>
-        <div class="stage"><strong>02</strong><b>Read</b><span>OCR + a vision-language model return labels and boxes.</span></div>
-        <div class="stage"><strong>03</strong><b>Trace</b><span>SAM2 proposes map regions; color matching assigns unit codes.</span></div>
-        <div class="stage"><strong>04</strong><b>Export</b><span>Geometry code writes polygons and places them on Earth.</span></div>
+        <div><p class="kicker">Six real maps · input beside result</p><h2>Pictures on the left. Saved data on the right.</h2></div>
       </div>
 
       <div class="worked">
         <article class="worked-example" id="example-points">
           <div class="example-head">
             <div><span class="example-tag">Example 1 · Black Crystal</span><h3>A printed dot becomes a data record</h3></div>
-            <p>The reader returned six point entries. The green box marks one actual prediction.</p>
+            <p>Six drill-hole entries were saved. Green marks the 2011 dot.</p>
           </div>
           <div class="example-grid">
             <figure class="example-figure">
-              <div class="bbox-demo"><img src="assets/rc1-black-crystal.png" alt="Black Crystal legend crop with the predicted 2011 drill-hole symbol highlighted"><span class="det-box" aria-hidden="true"><em>model box</em></span></div>
-              <figcaption><b>INPUT</b> · scanned legend. Green = predicted symbol location.</figcaption>
+              <div class="bbox-demo"><img src="assets/rc1-black-crystal.png" alt="Black Crystal legend crop with the saved 2011 drill-hole box highlighted"><span class="det-box" aria-hidden="true"><em>saved box</em></span></div>
+              <figcaption><b>INPUT + SAVED BOX</b> · Black Crystal drill-hole legend.</figcaption>
             </figure>
             <div class="output-panel">
-              <p class="output-label">Actual saved model output · entry 6 of 6</p>
-              <div class="record" aria-label="Actual structured output record">
+              <p class="output-label">Saved record · entry 6 of 6</p>
+              <div class="record" role="group" aria-label="Actual structured output record">
                 <div class="record-row"><span>label</span><span>Diamond drill hole (2011)</span></div>
                 <div class="record-row"><span>type</span><span>point</span></div>
                 <div class="record-row"><span>box</span><span>[194, 412, 205, 425]</span></div>
               </div>
-              <p class="output-note">The evaluator—not the model—checks whether every returned label and box is correct.</p>
+              <p class="output-note">Box center: 3.16 px from the reviewed center.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="worked-example" id="example-black-canyon">
+          <div class="example-head">
+            <div><span class="example-tag">Example 2 · Black Canyon</span><h3>A real miss, shown plainly</h3></div>
+            <p>Three bedding symbols were printed. None matched.</p>
+          </div>
+          <div class="example-grid">
+            <figure class="example-figure">
+              <div class="bbox-demo"><img loading="lazy" decoding="async" src="assets/rc4-black-canyon-symbol-row.png" alt="Black Canyon legend row with one wrong saved box in red and three reviewed bedding symbols in green"><span class="mark-box black-saved" aria-hidden="true"><em>saved: strike</em></span><span class="mark-box black-target-1" aria-hidden="true"><em>reviewed</em></span><span class="mark-box black-target-2" aria-hidden="true"></span><span class="mark-box black-target-3" aria-hidden="true"></span></div>
+              <figcaption><b>RED</b> · saved row. <b>GREEN</b> · Inclined, Overturned and Horizontal.</figcaption>
+            </figure>
+            <div class="output-panel">
+              <p class="output-label">Saved record · only returned row</p>
+              <div class="record">
+                <div class="record-row"><span>label</span><span>strike</span></div>
+                <div class="record-row"><span>type</span><span>point</span></div>
+                <div class="record-row"><span>box</span><span>[10, 41, 86, 67]</span></div>
+              </div>
+              <p class="output-note">CHECK · 0 of 3 matched. Inclined was mislabeled; two symbols were missed.</p>
             </div>
           </div>
         </article>
 
         <article class="worked-example" id="example-polygons">
           <div class="example-head">
-            <div><span class="example-tag">Example 2 · Hughes, Alaska</span><h3>Map colors become editable polygons</h3></div>
-            <p>SAM2 proposes masks. Color matching assigns legend codes. Contour code writes vertices.</p>
+            <div><span class="example-tag">Example 3 · Hughes, Alaska</span><h3>Map colors become editable polygons</h3></div>
+            <p>Original scan on the left. Saved overlay on the right.</p>
           </div>
           <div class="example-visuals">
             <figure><img loading="lazy" decoding="async" src="assets/example-hughes-input.png" alt="Original scanned Hughes geologic map sheet"><figcaption><b>INPUT</b> · original public USGS scan.</figcaption></figure>
-            <figure><img loading="lazy" decoding="async" src="assets/rc7-hughes-polygons.jpg" alt="Generated prediction overlay on the Hughes map"><figcaption><b>OUTPUT OVERLAY</b> · bright colors identify assigned units; dark areas are unassigned.</figcaption></figure>
+            <figure><img loading="lazy" decoding="async" src="assets/rc7-hughes-polygons.jpg" alt="Saved polygon overlay on the Hughes map"><figcaption><b>SAVED OVERLAY</b> · bright = assigned; dark = unassigned.</figcaption></figure>
           </div>
-          <div class="result-strip" aria-label="Actual Hughes output counts">
-            <div class="result-stat"><b>50</b><span>nonempty unit codes</span></div>
-            <div class="result-stat"><b>1,329</b><span>polygon features</span></div>
-            <div class="result-stat"><b>41</b><span>separate <code>al</code> patches</span></div>
-            <div class="result-stat"><b>1,217</b><span>vertices for <code>al</code></span></div>
+          <div class="result-strip" role="group" aria-label="Actual Hughes output counts">
+            <div class="result-stat"><b>50</b><span>map-unit labels used</span></div>
+            <div class="result-stat"><b>1,329</b><span>editable shapes</span></div>
+            <div class="result-stat"><b>41</b><span>areas labeled <code>al</code></span></div>
+            <div class="result-stat"><b>1,217</b><span>outline points for <code>al</code></span></div>
+          </div>
+        </article>
+
+        <article class="worked-example" id="example-frederick">
+          <div class="example-head">
+            <div><span class="example-tag">Example 4 · Frederick, Maryland</span><h3>One scan becomes 1,042 GIS features</h3></div>
+            <p>The right image is the saved overlay, not ground truth.</p>
+          </div>
+          <div class="example-visuals">
+            <figure><img loading="lazy" decoding="async" src="assets/example-frederick-input.png" alt="Public Frederick geologic map scan"><figcaption><b>INPUT</b> · 10,250 × 14,537 source pixels.</figcaption></figure>
+            <figure><img loading="lazy" decoding="async" src="assets/rc8-frederick-polygons.jpg" alt="Saved Frederick polygon overlay"><figcaption><b>SAVED OVERLAY</b> · bright = assigned; dark = unassigned.</figcaption></figure>
+          </div>
+          <div class="result-strip" role="group" aria-label="Actual Frederick output counts">
+            <div class="result-stat"><b>2,743</b><span>polygon contours</span></div>
+            <div class="result-stat"><b>267</b><span>unit codes</span></div>
+            <div class="result-stat"><b>48.78%</b><span>map pixels assigned</span></div>
+            <div class="result-stat"><b>1,042</b><span>delivered map-unit features</span></div>
+          </div>
+        </article>
+
+        <article class="worked-example" id="example-needles">
+          <div class="example-head">
+            <div><span class="example-tag">Example 5 · Needles, California/Arizona</span><h3>An evaluated success case</h3></div>
+            <p>The score belongs to the exact overlay pictured below.</p>
+          </div>
+          <div class="example-visuals">
+            <figure><img loading="lazy" decoding="async" src="assets/example-needles-input.png" alt="Public Needles geologic map scan"><figcaption><b>INPUT</b> · 11,100 × 8,850 source pixels.</figcaption></figure>
+            <figure><img loading="lazy" decoding="async" src="assets/example-needles-output.jpg" alt="Evaluated Needles polygon overlay"><figcaption><b>SAVED OVERLAY</b> · same-stage result used for the score.</figcaption></figure>
+          </div>
+          <div class="result-strip" role="group" aria-label="Actual Needles output and score">
+            <div class="result-stat"><b>716</b><span>polygon contours</span></div>
+            <div class="result-stat"><b>33 / 34</b><span>unit codes present</span></div>
+            <div class="result-stat"><b>78.63%</b><span>map pixels assigned</span></div>
+            <div class="result-stat"><b>66.08%</b><span>pixel F1</span></div>
           </div>
         </article>
 
         <article class="worked-example" id="example-georef">
           <div class="example-head">
-            <div><span class="example-tag">Example 3 · Kechumstuk, Alaska</span><h3>Image pixels get real coordinates</h3></div>
-            <p>Tesseract reads border ticks. OpenCV locates them. A homography maps pixels to latitude and longitude.</p>
+            <div><span class="example-tag">Example 6 · Kechumstuk, Alaska</span><h3>A printed tick becomes a map coordinate</h3></div>
+            <p>The printed 64°15′ mark is saved as 64.25° N.</p>
           </div>
           <div class="geo-example">
             <figure><img loading="lazy" decoding="async" src="assets/rc8-georef-latitude.png" alt="Raw Kechumstuk evidence crop showing the 64 degrees 15 minutes latitude tick"><figcaption><b>RAW EVIDENCE</b> · printed <code>64°15′</code> border tick.</figcaption></figure>
             <div class="geo-read">
-              <div class="geo-step"><small>OCR reads</small><b>64°15′</b></div>
-              <div class="geo-step"><small>Code normalizes</small><b>64.25° N · 9 tick constraints</b></div>
-              <div class="geo-step"><small>Fitted sheet extent</small><div class="coord-grid"><span class="coord">63.997–64.257° N</span><span class="coord">143.387–142.696° W</span></div></div>
-              <p class="output-note">No VLM or SAM2 here: this step is OCR + deterministic geometry.</p>
+              <div class="geo-step"><small>Printed</small><b>64°15′</b></div>
+              <div class="geo-step"><small>Saved</small><b>64.25° N · 9 border marks</b></div>
+              <div class="geo-step"><small>Whole sheet</small><div class="coord-grid"><span class="coord">63.997–64.257° N</span><span class="coord">143.387–142.696° W</span></div></div>
             </div>
           </div>
         </article>
@@ -266,20 +322,20 @@
   <section id="rcs">
     <div class="wrap">
       <div class="section-head">
-        <div><p class="kicker">Two real pictures for every RC</p><h2>RC1 → RC8</h2></div>
-        <p class="section-note">WHAT says what changed. WHY says why it mattered. Click any picture for the full artifact.</p>
+        <div><p class="kicker">Two pictures for every RC</p><h2>RC1 → RC8</h2></div>
+        <p class="section-note">Every picture is a real saved input or overlay. Red means rejected.</p>
       </div>
-      <div class="visual-key" aria-label="Status key"><span class="key good">released / current</span><span class="key warn">research / gate</span><span class="key bad">rejected</span></div>
+      <div class="visual-key" role="group" aria-label="Status key"><span class="key good">released / current</span><span class="key warn">research / gate</span><span class="key bad">rejected</span></div>
 
       <div class="rc-list" style="margin-top:22px">
         <article class="rc-card" id="rc1">
           <div class="rc-top">
             <div class="rc-id">RC1</div>
             <div>
-              <div class="rc-titleline"><h3>First end-to-end reader</h3><span class="status warn">prototype</span></div>
+              <div class="rc-titleline"><h3>Read point symbols from a legend</h3><span class="status warn">prototype</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Raw legend crop → point-symbol JSON.</span></div>
-                <div class="answer"><b>WHY</b><span>Proved the task; exposed brittle layouts.</span></div>
+                <div class="answer"><b>WHAT</b><span>Black Crystal: six drill-hole rows saved as JSON.</span></div>
+                <div class="answer"><b>WHY</b><span>Simple rows worked; changed layouts broke them.</span></div>
                 <div class="score">FIRST PROOF · no safe headline score</div>
               </div>
             </div>
@@ -294,17 +350,17 @@
           <div class="rc-top">
             <div class="rc-id">RC2</div>
             <div>
-              <div class="rc-titleline"><h3>Packaged recovery pipeline</h3><span class="status">packaged</span></div>
+              <div class="rc-titleline"><h3>Recover rows missed on the full legend</h3><span class="status">packaged</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Full-legend reader + deterministic row recovery.</span></div>
-                <div class="answer"><b>WHY</b><span>Recovery beat raw decoding.</span></div>
+                <div class="answer"><b>WHAT</b><span>Crop a missed symbol row and try that row again.</span></div>
+                <div class="answer"><b>WHY</b><span>159 of 167 known rows were recovered.</span></div>
                 <div class="score">159 / 167 rows recovered across six splits</div>
               </div>
             </div>
           </div>
           <div class="picture-pair">
-            <figure><a class="picture" href="assets/rc2-strawberry-butte-row.png"><img loading="lazy" decoding="async" src="assets/rc2-strawberry-butte-row.png" alt="Strawberry Butte blind point-symbol probe row"></a><figcaption><b>Strawberry Butte</b> · packaged RC2 blind probe.</figcaption></figure>
-            <figure><a class="picture" href="assets/rc2-peach-springs-row.png"><img loading="lazy" decoding="async" src="assets/rc2-peach-springs-row.png" alt="Peach Springs blind point-symbol probe row"></a><figcaption><b>Peach Springs</b> · a second packaged blind probe.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc2-strawberry-butte-row.png"><img loading="lazy" decoding="async" src="assets/rc2-strawberry-butte-row.png" alt="Strawberry Butte point-symbol input row"></a><figcaption><b>INPUT · Strawberry Butte</b> · symbol row.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc2-peach-springs-row.png"><img loading="lazy" decoding="async" src="assets/rc2-peach-springs-row.png" alt="Peach Springs point-symbol input row"></a><figcaption><b>INPUT · Peach Springs</b> · symbol row.</figcaption></figure>
           </div>
         </article>
 
@@ -312,17 +368,17 @@
           <div class="rc-top">
             <div class="rc-id">RC3</div>
             <div>
-              <div class="rc-titleline"><h3>Source-disjoint blind gate</h3><span class="status warn">blind gate</span></div>
+              <div class="rc-titleline"><h3>Try maps from completely new sources</h3><span class="status warn">source test</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>New-source crops + guarded point rows.</span></div>
-                <div class="answer"><b>WHY</b><span>Tested whether gains survived new map sources.</span></div>
+                <div class="answer"><b>WHAT</b><span>Bettles and House Rock were outside the training sources.</span></div>
+                <div class="answer"><b>WHY</b><span>Only 2 more of 106 target symbols were found.</span></div>
                 <div class="score">BLIND-1 · 39 → 41 / 106 matches</div>
               </div>
             </div>
           </div>
           <div class="picture-pair">
-            <figure><a class="picture" href="assets/rc3-bettles.png"><img loading="lazy" decoding="async" src="assets/rc3-bettles.png" alt="Bettles source-disjoint blind legend crop"></a><figcaption><b>Bettles</b> · held-out source layout.</figcaption></figure>
-            <figure><a class="picture" href="assets/rc3-house-rock.png"><img loading="lazy" decoding="async" src="assets/rc3-house-rock.png" alt="House Rock source-disjoint blind legend crop"></a><figcaption><b>House Rock</b> · second blind layout.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc3-bettles.png"><img loading="lazy" decoding="async" src="assets/rc3-bettles.png" alt="Bettles new-source legend crop"></a><figcaption><b>INPUT · Bettles</b> · new source layout.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc3-house-rock.png"><img loading="lazy" decoding="async" src="assets/rc3-house-rock.png" alt="House Rock new-source legend crop"></a><figcaption><b>INPUT · House Rock</b> · second source layout.</figcaption></figure>
           </div>
         </article>
 
@@ -330,17 +386,18 @@
           <div class="rc-top">
             <div class="rc-id">RC4</div>
             <div>
-              <div class="rc-titleline"><h3>Hybrid point-symbol reader</h3><span class="status">released</span></div>
+              <div class="rc-titleline"><h3>Save each mark with its printed label</h3><span class="status">released</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Detector + OCR + vision-language model.</span></div>
-                <div class="answer"><b>WHY</b><span>Turned legend point symbols into the released reader.</span></div>
+                <div class="answer"><b>WHAT</b><span>Label + point type + pixel box.</span></div>
+                <div class="answer"><b>WHY</b><span>Released, with real successes and real misses.</span></div>
                 <div class="score">BLIND-1 · 58/106 · P .563 &nbsp; | &nbsp; BLIND-2 · 45/100 · P .584</div>
+                <div class="resource-links"><a class="resource-link" href="https://huggingface.co/LockNToad/cartolegend-qwen2p5vl-7b-lora-rc4">RC4 adapter + results ↗</a><a class="resource-link" href="https://huggingface.co/LockNToad/cartolegend-rc4-modern">Full-sheet files + run guide ↗</a></div>
               </div>
             </div>
           </div>
           <div class="picture-pair">
-            <figure><a class="picture" href="assets/rc4-black-canyon-symbol-row.png"><img loading="lazy" decoding="async" src="assets/rc4-black-canyon-symbol-row.png" alt="Black Canyon second-blind point-symbol input crop"></a><figcaption><b>INPUT · Black Canyon</b> · second-blind point-symbol row.</figcaption></figure>
-            <figure><a class="picture" href="assets/rc4-howard-pass-symbol-row.png"><img loading="lazy" decoding="async" src="assets/rc4-howard-pass-symbol-row.png" alt="Howard Pass second-blind point-symbol input crop"></a><figcaption><b>INPUT · Howard Pass</b> · another map style.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc4-black-canyon-symbol-row.png"><img loading="lazy" decoding="async" src="assets/rc4-black-canyon-symbol-row.png" alt="Black Canyon point-symbol input crop"></a><figcaption><b>INPUT · Black Canyon</b> · three printed bedding symbols.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc4-howard-pass-symbol-row.png"><img loading="lazy" decoding="async" src="assets/rc4-howard-pass-symbol-row.png" alt="Howard Pass point-symbol input crop"></a><figcaption><b>INPUT · Howard Pass</b> · two printed deposit symbols.</figcaption></figure>
           </div>
         </article>
 
@@ -348,10 +405,10 @@
           <div class="rc-top">
             <div class="rc-id">RC5</div>
             <div>
-              <div class="rc-titleline"><h3>Harder retraining attempts</h3><span class="status bad">5.1–5.3 rejected</span></div>
+              <div class="rc-titleline"><h3>New training made new-map results worse</h3><span class="status bad">5.1–5.3 rejected</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Alternative models, data, and fine-tuning.</span></div>
-                <div class="answer"><b>WHY</b><span>Blind transfer regressed, so RC4 stayed.</span></div>
+                <div class="answer"><b>WHAT</b><span>Blind-1 fell 58 → 50; Blind-2 fell 45 → 34.</span></div>
+                <div class="answer"><b>WHY</b><span>Rejected. RC4 stayed public.</span></div>
                 <div class="score">50/106 · 34/100 · 55/145 &nbsp; | &nbsp; NOT SHIPPED</div>
               </div>
             </div>
@@ -366,10 +423,10 @@
           <div class="rc-top">
             <div class="rc-id">RC6</div>
             <div>
-              <div class="rc-titleline"><h3>Synthetic detour, pipeline gain</h3><span class="status warn">dead end → gain</span></div>
+              <div class="rc-titleline"><h3>Clean fake sheets did not transfer</h3><span class="status warn">mixed result</span></div>
               <div class="answers">
                 <div class="answer"><b>WHAT</b><span>Clean and degraded synthetic symbol sheets.</span></div>
-                <div class="answer"><b>WHY</b><span>Synthetic transfer failed; pipeline assembly won.</span></div>
+                <div class="answer"><b>WHY</b><span>The synthetic version was rejected; RC4-Modern still improved.</span></div>
                 <div class="score">RC4-MODERN · 52 → 77 / 167 · 0 empty-map false positives</div>
               </div>
             </div>
@@ -384,17 +441,17 @@
           <div class="rc-top">
             <div class="rc-id">RC7</div>
             <div>
-              <div class="rc-titleline"><h3>Whole-map polygon extraction</h3><span class="status warn">research pipeline</span></div>
+              <div class="rc-titleline"><h3>Trace whole-map colored regions</h3><span class="status warn">area tracing</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Legend units → colored map-body polygons.</span></div>
-                <div class="answer"><b>WHY</b><span>Made whole geologic regions editable in GIS.</span></div>
+                <div class="answer"><b>WHAT</b><span>Hughes: 1,329 editable shapes across 50 labels.</span></div>
+                <div class="answer"><b>WHY</b><span>Whole geologic regions could now open in GIS.</span></div>
                 <div class="score">347 TARGETS · R .8415 · P .7087 · IoU .172</div>
               </div>
             </div>
           </div>
           <div class="picture-pair">
-            <figure><a class="picture" href="assets/rc7-hughes-polygons.jpg"><img loading="lazy" decoding="async" src="assets/rc7-hughes-polygons.jpg" alt="Hughes map with RC7 polygon extraction overlay"></a><figcaption><b>Hughes, Alaska</b> · polygon candidates over the map body.</figcaption></figure>
-            <figure><a class="picture" href="assets/rc7-volcanoes-heldout.jpg"><img loading="lazy" decoding="async" src="assets/rc7-volcanoes-heldout.jpg" alt="New Mexico Volcanoes held-out map with RC7 polygon localization overlay"></a><figcaption><b>Volcanoes, New Mexico</b> · held-out sheet, different layout.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc7-hughes-polygons.jpg"><img loading="lazy" decoding="async" src="assets/rc7-hughes-polygons.jpg" alt="Hughes saved polygon overlay"></a><figcaption><b>OUTPUT · Hughes</b> · every bright shape has an assigned label.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc7-volcanoes-heldout.jpg"><img loading="lazy" decoding="async" src="assets/rc7-volcanoes-heldout.jpg" alt="New Mexico Volcanoes saved polygon overlay"></a><figcaption><b>OUTPUT · Volcanoes</b> · a different map layout.</figcaption></figure>
           </div>
         </article>
 
@@ -402,17 +459,18 @@
           <div class="rc-top">
             <div class="rc-id">RC8</div>
             <div>
-              <div class="rc-titleline"><h3>Masks, GIS delivery, georeferencing</h3><span class="status">current</span></div>
+              <div class="rc-titleline"><h3>Export polygons with labels and coordinates</h3><span class="status">GIS delivery</span></div>
               <div class="answers">
-                <div class="answer"><b>WHAT</b><span>Cleaner masks + attributes + map coordinates.</span></div>
-                <div class="answer"><b>WHY</b><span>Turned extracted regions into deliverable GIS layers.</span></div>
+                <div class="answer"><b>WHAT</b><span>Frederick: 1,042 features. Needles: 591.</span></div>
+                <div class="answer"><b>WHY</b><span>12 GeoJSON files + 12 matching GeoPackages.</span></div>
                 <div class="score">R .8732 · P .7426 · IoU .421 &nbsp; | &nbsp; 8,734 polygons</div>
+                <div class="resource-links"><a class="resource-link" href="https://huggingface.co/datasets/LockNToad/cartolegend-rc8-gis">Download all 24 GIS files ↗</a><a class="resource-link" href="https://huggingface.co/datasets/LockNToad/cartolegend-rc8-gis/blob/main/SOURCES.md">USGS source list ↗</a></div>
               </div>
             </div>
           </div>
           <div class="picture-pair">
-            <figure><a class="picture" href="assets/rc8-frederick-polygons.jpg"><img loading="lazy" decoding="async" src="assets/rc8-frederick-polygons.jpg" alt="Frederick map with RC8 stage-one mask overlay"></a><figcaption><b>OUTPUT OVERLAY · Frederick</b> · stage-one masks feeding GeoJSON.</figcaption></figure>
-            <figure><a class="picture" href="assets/rc8-georef-latitude.png"><img loading="lazy" decoding="async" src="assets/rc8-georef-latitude.png" alt="Raw Kechumstuk latitude-tick evidence crop"></a><figcaption><b>RAW EVIDENCE · Kechumstuk</b> · tick used to fit coordinates.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc8-frederick-polygons.jpg"><img loading="lazy" decoding="async" src="assets/rc8-frederick-polygons.jpg" alt="Frederick saved map-unit overlay"></a><figcaption><b>OUTPUT · Frederick</b> · saved map-unit shapes.</figcaption></figure>
+            <figure><a class="picture" href="assets/rc8-georef-latitude.png"><img loading="lazy" decoding="async" src="assets/rc8-georef-latitude.png" alt="Kechumstuk printed latitude tick crop"></a><figcaption><b>INPUT · Kechumstuk</b> · printed 64°15′ border mark.</figcaption></figure>
           </div>
         </article>
       </div>
@@ -427,7 +485,7 @@
       </div>
       <div class="chart-grid">
         <article class="chart wide">
-          <h3>Point-symbol blind matches</h3>
+          <h3>Point symbols found on new-source maps</h3>
           <p class="chart-sub">Targets found; each bar shows its own denominator.</p>
           <div class="chart-split">
             <div><p class="chart-label">Blind-1 · 106 targets</p><div class="bar-group">
@@ -436,26 +494,28 @@
               <div class="bar-row"><span class="bar-label">RC4</span><span class="bar-track"><span class="bar best" style="width:54.7%"></span></span><span class="bar-value">58</span></div>
               <div class="bar-row"><span class="bar-label">RC5</span><span class="bar-track"><span class="bar reject" style="width:47.2%"></span></span><span class="bar-value">50</span></div>
             </div>
+            </div>
             <div><p class="chart-label">Blind-2 · 100 targets</p><div class="bar-group">
               <div class="bar-row"><span class="bar-label">RC3</span><span class="bar-track"><span class="bar old" style="width:23%"></span></span><span class="bar-value">23</span></div>
               <div class="bar-row"><span class="bar-label">RC4</span><span class="bar-track"><span class="bar best" style="width:45%"></span></span><span class="bar-value">45</span></div>
               <div class="bar-row"><span class="bar-label">RC5</span><span class="bar-track"><span class="bar reject" style="width:34%"></span></span><span class="bar-value">34</span></div>
             </div>
+            </div>
           </div>
         </article>
 
         <article class="chart">
-          <h3>Current polygon benchmark</h3>
+          <h3>RC8 colored-region score</h3>
           <p class="chart-sub">10 sheets · 347 target regions.</p>
           <div class="bar-group">
-            <div class="bar-row"><span class="bar-label">Found</span><span class="bar-track"><span class="bar best" style="width:87.3%"></span></span><span class="bar-value">87%</span></div>
-            <div class="bar-row"><span class="bar-label">Correct</span><span class="bar-track"><span class="bar" style="width:74.3%"></span></span><span class="bar-value">74%</span></div>
-            <div class="bar-row"><span class="bar-label">Overlap</span><span class="bar-track"><span class="bar blue" style="width:42.1%"></span></span><span class="bar-value">42%</span></div>
+            <div class="bar-row"><span class="bar-label">Recall</span><span class="bar-track"><span class="bar best" style="width:87.3%"></span></span><span class="bar-value">87%</span></div>
+            <div class="bar-row"><span class="bar-label">Precision</span><span class="bar-track"><span class="bar" style="width:74.3%"></span></span><span class="bar-value">74%</span></div>
+            <div class="bar-row"><span class="bar-label">IoU</span><span class="bar-track"><span class="bar blue" style="width:42.1%"></span></span><span class="bar-value">42%</span></div>
           </div>
         </article>
 
         <article class="chart">
-          <h3>RC7 → RC8 outlines</h3>
+          <h3>Same maps: RC7 vs RC8</h3>
           <p class="chart-sub">Same 10 sheets and 347 targets.</p>
           <div class="bar-group">
             <div class="dual-row"><span class="bar-label">Recall</span><span class="dual-bars"><span class="dual" style="width:84.2%"></span><span class="dual new" style="width:87.3%"></span></span></div>
@@ -466,7 +526,7 @@
         </article>
 
         <article class="chart">
-          <h3>GIS field coverage</h3>
+          <h3>What each delivered polygon contains</h3>
           <p class="chart-sub">8,734 polygons · 12 public sheets.</p>
           <div class="bar-group">
             <div class="bar-row"><span class="bar-label">Codes</span><span class="bar-track"><span class="bar best" style="width:100%"></span></span><span class="bar-value">100%</span></div>
@@ -477,7 +537,7 @@
         </article>
 
         <article class="chart">
-          <h3>Repeated reads move</h3>
+          <h3>Same 99 labels read three times</h3>
           <p class="chart-sub">Divergent units in three 5-pass blocks · 99 units.</p>
           <div class="bar-group">
             <div class="bar-row"><span class="bar-label">Block A</span><span class="bar-track"><span class="bar" style="width:45.5%"></span></span><span class="bar-value">5</span></div>
@@ -487,35 +547,25 @@
             <div class="bar-row"><span class="bar-label">All three</span><span class="bar-track"><span class="bar reject" style="width:1px"></span></span><span class="bar-value">0</span></div>
           </div>
         </article>
-
-        <article class="chart">
-          <h3>A control instrument can be built</h3>
-          <p class="chart-sub">Declared candidates reaching the raw-count gate · 56 candidates · 10 public sheets, one frozen draw.</p>
-          <div class="bar-group">
-            <div class="bar-row"><span class="bar-label">Qualify</span><span class="bar-track"><span class="bar best" style="width:82.1%"></span></span><span class="bar-value">46</span></div>
-            <div class="bar-row"><span class="bar-label">Do not</span><span class="bar-track"><span class="bar reject" style="width:17.9%"></span></span><span class="bar-value">10</span></div>
-          </div>
-          <p class="chart-sub">On ten public AI4CMA sheets under one frozen draw, 46 of 56 declared candidates qualify and the first in sealed order carries both raw row margins — shared 46 = changed 11 + unchanged 35, with a family maximum unchanged of 40 beside the closed full-salt ceiling of 2 — but this run is informed and not blind, so no accuracy rate exists; every figure is a count shown with both margins, never a bare rate, and is never pooled with any other number on this page; it measures only whether an experimental control instrument can be <em>built</em>, and says nothing about join accuracy, about whether any description or name is correct, or about the reader, there being no human adjudicator and no answer key; the 56 candidates are one declared family rather than every possible generator, so a null would bound this design and not the idea; and no candidate was ever sent to a model — all answer columns are unobserved and not imputed, so no contingency test and no p-value exist.</p>
-        </article>
       </div>
     </div>
   </section>
 
   <section class="method" id="method">
     <div class="wrap">
-      <p class="kicker" style="color:#9cddd5">Evidence boundary</p>
-      <h2>What the numbers mean</h2>
+      <p class="kicker" style="color:#9cddd5">Read before comparing</p>
+      <h2>Limits</h2>
       <details style="margin-top:22px">
-        <summary>Open the short methods note</summary>
-        <p>Each number belongs only to its named frozen evaluation and denominator; results are not pooled across RCs. RC7/RC8 polygon sheets are public benchmark sheets, not blind. Field coverage measures presence or form, not factual correctness. Repeatability measures whether reads agree, not whether they are right. Picture overlays show actual pipeline artifacts; a box or mask alone is not an accuracy claim.</p>
+        <summary>Show the limits</summary>
+        <p>RC4 bars use their named new-source tests. RC7/RC8 use 10 public maps and 347 target regions. A filled field can be wrong. Repeated answers can be wrong. Colored overlays are saved outputs, not ground truth.</p>
       </details>
     </div>
   </section>
 </main>
 
 <footer><div class="wrap footer-row">
-  <span>CartoLegend / Map-Model program · public visual progress record</span>
-  <span>Public USGS map imagery + project diagnostic artifacts</span>
+  <span>CartoLegend · scanned geologic maps to GIS</span>
+  <span>Public USGS maps · real saved outputs</span>
 </div></footer>
 </body>
 </html>
