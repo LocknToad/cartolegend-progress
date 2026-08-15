@@ -576,6 +576,21 @@
           </div>
         </div>
       </article>
+      <article class="rc-card" style="margin-top:18px">
+        <div class="rc-top">
+          <div class="rc-id">RC10</div>
+          <div>
+            <div class="rc-titleline"><h3>Ask at a point, get the right kind of answer</h3><span class="status warn">in progress</span></div>
+            <div class="answers">
+              <div class="answer"><b>WHAT</b><span>24,784 point queries at four search radii (0, 1, 4 and 16 pixels) against the saved shapes: the answer state — one unit, on a boundary, unknown, or off the sheet — was right 99.9677% of the time.</span></div>
+              <div class="answer"><b>WHY IT MATTERS</b><span>The point is to answer or to say plainly that no single answer is safe. The correct unit was among the candidates 99.9246% of the time, a confident single answer was wrong where the truth was a boundary or unknown 0.0543% of the time, and no query returned a contradictory overlap. Every error sat where the search disk only partly touched a region; none at radius 0.</span></div>
+              <div class="score">acc .999677 · recall .999246 · false-confident .000543 · 24,784 queries · 12 sheets</div>
+              <div class="answer"><b>LIMIT</b><span>These are pixel-space queries on 12 public shipped sheets against the frozen tolerance-0.5 coverage, with no georeferencing, no unit-assignment correctness claim, and no independent verification yet.</span></div>
+              <div class="answer"><b>HOW IT RAN</b><span>A licensed successor run after an earlier partial observation covering 8 of the 12 sheets, disclosed here because it was seen before this run was authorised; the settings were locked to the earlier run's and the 8 shared sheets reproduced it digit for digit.</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
