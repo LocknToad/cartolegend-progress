@@ -551,6 +551,44 @@
     </div>
   </section>
 
+  <section id="rc10-progress">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="kicker">Being built now · not released</p><h2>RC10: keep every shape the map actually has</h2></div>
+        <p class="section-note">Two measurements on the same 12 public shipped sheets. Both are pixel-space only: no map coordinates are involved, and neither says a unit label is correct.</p>
+      </div>
+      <article class="rc-card">
+        <div class="rc-top">
+          <div class="rc-id">RC10</div>
+          <div>
+            <div class="rc-titleline"><h3>Saved shapes now redraw the map exactly</h3><span class="status warn">in progress</span></div>
+            <div class="answers">
+              <div class="answer"><b>WHAT</b><span>12 GeoJSON sheets, read back off disk and drawn onto the frozen prediction planes: 0 changed pixels on 12 of 12 sheets.</span></div>
+              <div class="answer"><b>KEPT</b><span>257,155 shape parts and 13,643 holes (10,409 hole rings), with zero overlaps between different unit codes, zero uncovered labeled pixels, and zero invalid or wrong-winding rings.</span></div>
+              <div class="score">0 changed pixels · 12/12 sheets · 13,643 holes kept</div>
+              <div class="answer"><b>LIMIT</b><span>This is pixel-space export fidelity on 12 public shipped sheets, with no georeferencing, no unit-assignment claim, and no independent verification yet.</span></div>
+              <div class="answer"><b>NOT THIS</b><span>It is a different measurement from the RC8 polygon figures above (R .8732 · P .7426 · IoU .421 · 8,734 polygons), which it neither reproduces nor corrects.</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="rc-card" style="margin-top:18px">
+        <div class="rc-top">
+          <div class="rc-id">RC10</div>
+          <div>
+            <div class="rc-titleline"><h3>What surrounds the area still marked unknown</h3><span class="status warn">in progress</span></div>
+            <div class="answers">
+              <div class="answer"><b>WHAT</b><span>Of all the area the pipeline leaves as explicit unknown: 0.26% is enclosed by exactly one known unit code, 5.47% by two or more, 94.27% by known codes plus the sheet frame, and 0.00% by the frame alone.</span></div>
+              <div class="answer"><b>SO WHAT</b><span>Counting only unknown area that never touches the frame, the share enclosed by exactly one known code is R = 0.0452. The team had fixed 0.10 in advance as the level worth chasing, so filling unknown regions from a single surrounding code is closed as a direction.</span></div>
+              <div class="score">R = 0.0452 · 12 sheets · threshold 0.10 set before the run</div>
+              <div class="answer"><b>LIMIT</b><span>This structural census on 12 public shipped sheets in pixel space establishes what encloses unknown regions, not what they should be labelled, and it has no independent verification yet.</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="method" id="method">
     <div class="wrap">
       <p class="kicker" style="color:#9cddd5">Read before comparing</p>
