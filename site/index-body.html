@@ -545,7 +545,7 @@
     <div class="wrap">
       <div class="section-head">
         <div><p class="kicker">Being built now · not released</p><h2>RC10: keep every shape the map actually has</h2></div>
-        <p class="section-note">Two measurements on the same 12 public shipped sheets. Both are pixel-space only: no map coordinates are involved, and neither says a unit label is correct.</p>
+        <p class="section-note">Four measurements on the same 12 public shipped sheets. All are pixel-space only: no map coordinates are involved, and none says a unit label is correct.</p>
       </div>
       <article class="rc-card">
         <div class="rc-top">
@@ -589,6 +589,22 @@
               <div class="score">acc .999677 · recall .999246 · false-confident .000543 · 24,784 queries · 12 sheets</div>
               <div class="answer"><b>LIMIT</b><span>These are pixel-space queries on 12 public shipped sheets against the frozen tolerance-0.5 coverage, with no georeferencing, no unit-assignment correctness claim, and no independent verification yet.</span></div>
               <div class="answer"><b>HOW IT RAN</b><span>A licensed successor run after an earlier partial observation covering 8 of the 12 sheets, disclosed here because it was seen before this run was authorised; the settings were locked to the earlier run's and the 8 shared sheets reproduced it digit for digit.</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="rc-card" style="margin-top:18px">
+        <div class="rc-top">
+          <div class="rc-id">RC10</div>
+          <div>
+            <div class="rc-titleline"><h3>Units trapped inside other units survive the export</h3><span class="status warn">in progress</span></div>
+            <div class="answers">
+              <div class="answer"><b>WHAT</b><span>1,061 enclosed regions &mdash; a patch of one unit completely surrounded by another &mdash; checked one at a time against the saved shapes. In 0 of them does the surrounding unit&rsquo;s saved area cover the enclosed patch&rsquo;s pixels. All 1,061 of 1,061 survive.</span></div>
+              <div class="answer"><b>WHY IT MATTERS</b><span>This is the exact failure the RC10 shape work exists to fix: in the released RC8 files an enclosed patch could be swallowed by the unit around it, leaving two units claiming the same ground. Re-checking just the neighbourhoods of the 175 hardest cases reproduced the 0-changed-pixel result above, so the two measurements agree where a swallowed patch would have shown up.</span></div>
+              <div class="score">1,061 / 1,061 enclosed regions kept &middot; 0 covered by the surrounding unit &middot; 12 sheets</div>
+              <div class="answer"><b>SUPERSEDES</b><span>An internal check had scored this 886 of 1,061 (0.835). That figure never appeared on this page, and it was measuring something stricter and different: whether each hole was written as an exact interior ring, not whether the ground was double-claimed. A one-cell hole can be carried by the outline of a small outer piece with no interior ring at all, which the stricter rule can never credit.</span></div>
+              <div class="answer"><b>LIMIT</b><span>This is a pixel-space structural diagnosis on 12 public shipped sheets. It establishes that enclosed regions survive the export &mdash; not that any unit label is correct &mdash; and it has no independent verification yet.</span></div>
+              <div class="answer"><b>HOW IT RAN</b><span>The same worker that produced the saved shape files under examination also ran this check, and disclosed that. It is not an independent audit, and the 175 disagreeing cases remain a real encoding quirk of how holes are written.</span></div>
             </div>
           </div>
         </div>
